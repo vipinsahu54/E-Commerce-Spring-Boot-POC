@@ -1,0 +1,299 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" class="no-js" lang="zxx">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<title>eCommerce HTML-5 Template</title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="manifest" href="site.webmanifest">
+<link rel="shortcut icon" type="image/x-icon"
+	href="assets/img/favicon.ico">
+
+<!-- CSS here -->
+<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="assets/css/owl.carousel.min.css">
+<link rel="stylesheet" href="assets/css/flaticon.css">
+<link rel="stylesheet" href="assets/css/slicknav.css">
+<link rel="stylesheet" href="assets/css/animate.min.css">
+<link rel="stylesheet" href="assets/css/magnific-popup.css">
+<link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="assets/css/themify-icons.css">
+<link rel="stylesheet" href="assets/css/slick.css">
+<link rel="stylesheet" href="assets/css/nice-select.css">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+
+	<header>
+		<!-- Header Start -->
+		<div class="header-area">
+			<div class="main-header ">
+				<div class="header-bottom  header-sticky">
+					<div class="container-fluid">
+						<div class="row align-items-center">
+							<!-- Logo -->
+							<div class="col-xl-1 col-lg-1 col-md-1 col-sm-3">
+								<div class="logo">
+									<a href="index.html"><img src="assets/img/logo/logo.png"
+										alt=""></a>
+								</div>
+							</div>
+							<div class="col-xl-6 col-lg-8 col-md-7 col-sm-5">
+								<!-- Main-menu -->
+								<div class="main-menu f-right d-none d-lg-block">
+									<nav>
+										<ul id="navigation">
+											<li><a href="/index">Home</a></li>
+											<li><a href="/products">Products</a></li>
+										</ul>
+									</nav>
+								</div>
+							</div>
+							<div class="col-xl-5 col-lg-3 col-md-3 col-sm-3 fix-card">
+								<ul
+									class="header-right f-right d-none d-lg-block d-flex justify-content-between">
+									<li class="d-none d-xl-block">
+										<div class="form-box f-right ">
+											<input type="text" name="Search"
+												placeholder="Search products">
+											<div class="search-icon">
+												<i class="fas fa-search special-tag"></i>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="shopping-card">
+											<div class="cart-number">3</div>
+											<a href="/cart"><i class="fas fa-shopping-cart"></i></a>
+										</div>
+									</li>
+									<li class="d-none d-lg-block"><a href="/login"
+										class="btn header-btn"  th:text="${username}">Sign in</a></li>
+								</ul>
+							</div>
+							<!-- Mobile Menu -->
+							<div class="col-12">
+								<div class="mobile_menu d-block d-lg-none"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Header End -->
+	</header>
+	<div class="hero-cap text-center">
+		<h2>Card List</h2>
+	</div>
+
+	<!--================Cart Area =================-->
+	<section class="cart_area " style="padding-bottom:100px;">
+		<div class="container">
+			<div class="cart_inner">
+				<div class="table-responsive">
+					<table class="table">
+						<thead>
+							<tr>
+								<th scope="col">Product</th>
+								<th scope="col">Price</th>
+								<th scope="col">Quantity</th>
+								<th scope="col">Total</th>
+							</tr>
+						</thead>
+						<tbody>
+
+
+							<tr th:each="cartitem: ${cart.items}">
+								<td>
+									<a th:href="${'/product-detail/'+cartitem.item.id}">
+									<div class="media">
+										<div class="d-flex">
+											<img th:src="${cartitem.item.images}" alt="" />
+										</div>
+										<div class="media-body">
+											<p th:text="${cartitem.item.name}">Minimalistic shop for
+												multipurpose use</p>
+										</div>
+									</div>
+										</a>
+								</td>
+								<td>
+									<h5 th:text="${'Rs. '+cartitem.item.price}">$360.00</h5>
+								</td>
+								<td>
+									<div class="product_count">
+										<span class="input-number-decrement"
+											th:attr="onclick=|decrease('${cartitem.item.id}')|">
+											<i class="ti-minus"></i>
+										</span> <input class="input-number" type="text"
+											th:id="${'quantity'+cartitem.item.id}" name="quantity"
+											th:value="${cartitem.quantity}" min="0" max="10"> <span
+											class="input-number-increment"
+											th:attr="onclick=|increase('${cartitem.item.id}')|"> <i
+											class="ti-plus"></i></span>
+									</div>
+								</td>
+								<td>
+									<h5 th:text="${'Rs. '+cartitem.quantity * cartitem.item.price}">$720.00</h5>
+								</td>
+							</tr>
+
+
+						<!-- 	<tr class="bottom_button">
+								<td><a class="btn_1" href="#">Update Cart</a></td>
+								<td></td>
+								<td></td>
+								<td>
+									<div class="cupon_text float-right">
+										<a class="btn_1" href="#">Close Coupon</a>
+									</div>
+								</td>
+							</tr> -->
+
+
+							<tr>
+								<td></td>
+								<td></td>
+								<td>
+									<h5>Subtotal</h5>
+								</td>
+								<td>
+									<h5 th:text="${'Rs. '+totalCart}">$2160.00</h5>
+								</td>
+							</tr>
+							<tr class="shipping_area">
+								<td></td>
+								<td></td>
+								<td>
+									<h5>Shipping</h5>
+								</td>
+								<td>
+									<h5>Free Delivery</h5>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<h5 class="p-5" th:text="${'Delivery Address: '+customer.address.houseNumber+'/ '+customer.address.streetName +'/ '+customer.address.city+', '+customer.address.state+' - '+customer.address.pincode}">Address</h5>
+					<div class="checkout_btn_inner float-right">
+						<a class="btn_1" href="/index">Continue Shopping</a> <a
+							class="btn_1 checkout_btn_1" href="/confirmation">Confirm Order</a>
+					</div>
+				</div>
+			</div>
+			</div>
+	</section>
+	<!--================End Cart Area =================-->
+
+	<footer>
+		<!-- Footer Start-->
+		<div class="footer-area footer-padding2">
+			<div class="container">
+				<div class="row d-flex justify-content-between">
+					<div class="col-xl-3 col-lg-3 col-md-5 col-sm-6">
+						<div class="single-footer-caption mb-50">
+							<div class="single-footer-caption mb-30">
+								<!-- logo -->
+								<div class="footer-logo">
+									<a href="index.html"><img
+										src="assets/img/logo/logo2_footer.png" alt=""></a>
+								</div>
+								<div class="footer-tittle">
+									<div class="footer-pera">
+										<p>Lorem ipsum dolor sit amet, consectetur adipisicing
+											elit sed do eiusmod tempor incididunt ut labore.</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xl-2 col-lg-3 col-md-3 col-sm-5">
+						<div class="single-footer-caption mb-50">
+							<div class="footer-tittle">
+								<h4>Quick Links</h4>
+								<ul>
+									<li><a href="#">About</a></li>
+									<li><a href="#"> Offers & Discounts</a></li>
+									<li><a href="#"> Get Coupon</a></li>
+									<li><a href="#"> Contact Us</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="col-xl-3 col-lg-3 col-md-4 col-sm-7">
+						<div class="single-footer-caption mb-50">
+							<div class="footer-tittle">
+								<h4>New Products</h4>
+								<ul>
+									<li><a href="#">Woman Cloth</a></li>
+									<li><a href="#">Fashion Accessories</a></li>
+									<li><a href="#"> Man Accessories</a></li>
+									<li><a href="#"> Rubber made Toys</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="col-xl-3 col-lg-3 col-md-5 col-sm-7">
+						<div class="single-footer-caption mb-50">
+							<div class="footer-tittle">
+								<h4>Support</h4>
+								<ul>
+									<li><a href="#">Frequently Asked Questions</a></li>
+									<li><a href="#">Terms & Conditions</a></li>
+									<li><a href="#">Privacy Policy</a></li>
+									<li><a href="#">Privacy Policy</a></li>
+									<li><a href="#">Report a Payment Issue</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<!-- Footer End-->
+	</footer>
+
+	<!-- JS here -->
+	<script type="text/javascript">
+  function decrease(id) {
+	  var qty="quantity";
+	  var x = document.getElementById(qty.concat(id)).value;
+	  if(x>1){
+		  document.getElementById(qty.concat(id)).value = --x;
+	  }
+	  
+	  const Http = new XMLHttpRequest();
+	  const url='/cart/decrease/';
+	  Http.open("GET", url.concat(id));
+	  Http.send();
+
+	  Http.onreadystatechange = (e) => {
+		  location.reload();
+	  }
+	}
+  
+  function increase(id) {
+	  var qty="quantity";
+	  var x = document.getElementById(qty.concat(id)).value;
+	  if(x<10){
+		  document.getElementById(qty.concat(id)).value = ++x;
+	  }
+	  const Http = new XMLHttpRequest();
+	  const url='/cart/increase/';
+	  Http.open("GET", url.concat(id));
+	  Http.send();
+
+	  Http.onreadystatechange = (e) => {
+		  location.reload();
+	  }
+	  
+	}
+  </script>
+
+</body>
+
+</html>
