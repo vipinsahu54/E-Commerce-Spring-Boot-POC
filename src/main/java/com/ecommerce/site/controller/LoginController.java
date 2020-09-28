@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,7 +33,7 @@ public class LoginController {
 	}
 	
 	@PostMapping(value = "/login")
-	public ModelAndView loginUser(@ModelAttribute("loginModel") Login login,HttpServletRequest request) {
+	public ModelAndView loginUser(@ModelAttribute("loginModel") Login login,HttpServletRequest request, ModelMap models) {
 		ModelAndView model=new ModelAndView();
 		Customer customer=null;
 		if(login.getUsername().contains(".com") &&  login.getUsername().contains("@")) {
@@ -46,9 +47,12 @@ public class LoginController {
 			model.setViewName("signin");
 			return model;
 		}
-		model.setViewName("index");
+//		model.addObject("pages", 1);
+//		model.setViewName("index");
+//		
+//		return model;
 		
-		return model;
+		return new ModelAndView("redirect:/index", models);
 	}
 	
 	
